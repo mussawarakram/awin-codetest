@@ -1,86 +1,87 @@
 package com.awin.coffeebreak.entity;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.awin.coffeebreak.exceptions.InvalidCoffeeBreakPreferenceException;
+import org.springframework.data.annotation.Id;
+
+import java.time.LocalDate;
 
 public class CoffeeBreakPreference {
 
-    private static List<String> TYPES = List.of("food", "drink");
-    private static List<String> DRINK_TYPES = List.of("coffee", "tea");
-    private static List<String> FOOD_TYPES = List.of("sandwich", "crisps", "toast");
 
-    Integer id;
-    private String type;
-    private String subType;
-    private StaffMember requestedBy;
-    private Instant requestedDate;
-    private Map<String, String> details;
+    public enum Drink {
+        COFFEE,
+        TEA
+    }
 
-    public CoffeeBreakPreference(
-          final String type, final String subType, final StaffMember requestedBy, final Map<String, String> details
-    ) {
-        if (!TYPES.contains(type)) {
-            throw new IllegalArgumentException();
+    public enum Food {
+        SANDWICH,
+        CRISPS,
+        TOAST
+    }
+
+    @Id
+    private LocalDate date;
+    private Food food;
+    private Drink drink;
+
+    public CoffeeBreakPreference(Food food, Drink drink, LocalDate date) {
+        this.food = food;
+        this.drink = drink;
+        this.date = date;
+    }
+
+    Food getFood() {
+        return food;
+    }
+
+    Drink getDrink() {
+        return drink;
+    }
+
+    LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
+     *  Allows the construction of an CoffeeBreakPreference object. Mandatory fields are date.
+     */
+    static class Builder {
+
+        private LocalDate date;
+        private Food food;
+        private Drink drink;
+
+        static Builder start() {
+            return new Builder();
         }
-        if (type.equals("food")) {
-            if (!FOOD_TYPES.contains(subType)) {
-                throw new IllegalArgumentException();
+
+        Builder withDate(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        Builder withFood(Food food) {
+            this.food = food;
+            return this;
+        }
+
+        Builder withDrink(Drink drink) {
+            this.drink = drink;
+            return this;
+        }
+
+        CoffeeBreakPreference build() {
+
+            if (date == null || (food == null && drink == null)) {
+                throw new InvalidCoffeeBreakPreferenceException();
             }
-        } else {
-            if (!DRINK_TYPES.contains(subType)) {
-                throw new IllegalArgumentException();
-            }
+
+            return new CoffeeBreakPreference(food, drink, date);
         }
 
-        this.type = type;
-
-        this.requestedBy = requestedBy;
-        if(!details.isEmpty()) {
-            setDetails(details);
-        } else {
-            setDetails(new HashMap<>());
-        }
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(final String type) {
-        this.type = type;
-    }
-
-    public String getSubType() {
-        return subType;
-    }
-
-    public void setSubType(final String subType) {
-        this.subType = subType;
-    }
-
-    public StaffMember getRequestedBy() {
-        return requestedBy;
-    }
-
-    public void setRequestedBy(final StaffMember requestedBy) {
-        this.requestedBy = requestedBy;
-    }
-
-    public Instant getRequestedDate() {
-        return requestedDate;
-    }
-
-    public void setRequestedDate(final Instant requestedDate) {
-        this.requestedDate = requestedDate;
-    }
-
-    private void setDetails(final Map<String, String> details) {
-        this.details = details;
-    }
-
-    public Map<String, String> getDetails() {
-        return details;
     }
 }
