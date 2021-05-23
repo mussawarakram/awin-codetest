@@ -38,7 +38,7 @@ public class CoffeeBreakPreference {
         return drink;
     }
 
-    LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

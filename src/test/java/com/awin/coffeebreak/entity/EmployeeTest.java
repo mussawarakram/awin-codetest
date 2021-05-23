@@ -1,12 +1,12 @@
 package com.awin.coffeebreak.entity;
 
 import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
-import com.awin.coffeebreak.testUtils.EmployeeUtility;
+import com.awin.coffeebreak.testUtils.TestEntityUtility;
 import com.awin.coffeebreak.testUtils.TestConfigurationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.awin.coffeebreak.testUtils.EmployeeUtility.*;
+import static com.awin.coffeebreak.testUtils.TestEntityUtility.*;
 
 class EmployeeTest {
 
@@ -35,12 +35,12 @@ class EmployeeTest {
     @Test
     void employeeBuilderShouldReturnEmployeeWithInputFieldsSetCorrectly() {
 
-        Employee employee = EmployeeUtility.getTestEmployee();
+        Employee employee = TestEntityUtility.getTestEmployee();
         assert(employee.getName()).equals(NAME);
         assert(employee.getId()).equals(ID);
 
-        assert(employee.getContactDetails().getEmailAddress()).equals(EMAIL);
-        assert(employee.getContactDetails().getSlackId()).equals(SLACK);
+        assert(employee.getContactDetails().getEmailAddress()).orElseThrow(TestConfigurationException::new).equals(EMAIL);
+        assert(employee.getContactDetails().getSlackId()).orElseThrow(TestConfigurationException::new).equals(SLACK);
 
         employee.getPreference().forEach(pref -> {
             assert(pref).getDate().isEqual(LOCALDATE);

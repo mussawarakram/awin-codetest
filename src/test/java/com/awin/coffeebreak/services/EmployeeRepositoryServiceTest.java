@@ -2,7 +2,7 @@ package com.awin.coffeebreak.services;
 
 import com.awin.coffeebreak.exceptions.EmployeeNotFoundException;
 import com.awin.coffeebreak.repositories.EmployeeRepository;
-import com.awin.coffeebreak.testUtils.EmployeeUtility;
+import com.awin.coffeebreak.testUtils.TestEntityUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -30,12 +30,12 @@ class EmployeeRepositoryServiceTest {
 
     @Test
     void getEmployeeByIdWhenFoundDoesNotThrowException() throws EmployeeNotFoundException {
-        Mockito.when(employeeRepository.findById(EmployeeUtility.ID)).thenReturn(Optional.of(EmployeeUtility.getTestEmployee()));
-        employeeRepositoryService.getEmployeeById(EmployeeUtility.ID);
+        Mockito.when(employeeRepository.findById(TestEntityUtility.ID)).thenReturn(Optional.of(TestEntityUtility.getTestEmployee()));
+        employeeRepositoryService.getEmployeeById(TestEntityUtility.ID);
     }
 
     @Test
     void getEmployeeByIdWhenNotFoundDoesThrowException() throws EmployeeNotFoundException {
-        Assertions.assertThrows( EmployeeNotFoundException.class, () -> employeeRepositoryService.getEmployeeById(EmployeeUtility.ID));
+        Assertions.assertThrows( EmployeeNotFoundException.class, () -> employeeRepositoryService.getEmployeeById(TestEntityUtility.ID));
     }
 }

@@ -4,6 +4,7 @@ import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class Employee {
         this.id = id;
     }
 
-    List<CoffeeBreakPreference> getPreference() {
+    public List<CoffeeBreakPreference> getPreference() {
         return preferences;
     }
 
@@ -47,7 +48,7 @@ public class Employee {
         this.preferences = preferences;
     }
 
-    ContactDetails getContactDetails() {
+    public ContactDetails getContactDetails() {
         return contactDetails;
     }
 

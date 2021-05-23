@@ -1,6 +1,8 @@
 package com.awin.coffeebreak.entity;
 
 
+import java.util.Optional;
+
 public class ContactDetails {
     private String emailAddress;
     private String slackId;
@@ -10,16 +12,16 @@ public class ContactDetails {
         this.slackId = slackId;
     }
 
-    String getEmailAddress() {
-        return emailAddress;
+    Optional<String> getEmailAddress() {
+        return Optional.ofNullable(emailAddress);
     }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    String getSlackId() {
-        return slackId;
+    public Optional<String> getSlackId() {
+        return Optional.ofNullable(slackId);
     }
 
     public void setSlackId(String slackId) {

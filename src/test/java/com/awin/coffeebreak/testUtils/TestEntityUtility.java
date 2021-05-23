@@ -3,12 +3,17 @@ package com.awin.coffeebreak.testUtils;
 import com.awin.coffeebreak.entity.CoffeeBreakPreference;
 import com.awin.coffeebreak.entity.ContactDetails;
 import com.awin.coffeebreak.entity.Employee;
+import com.awin.coffeebreak.entity.NotificationRequest;
 import com.awin.coffeebreak.exceptions.InvalidCoffeeBreakPreferenceException;
 import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class EmployeeUtility {
+public class TestEntityUtility {
 
     public static final String NAME = "Test";
     public static final Integer ID = 1;
@@ -33,5 +38,24 @@ public class EmployeeUtility {
         }
     }
 
+    public static Employee getTestEmployeeWithoutContactDetails() {
+        Employee employee = getTestEmployee();
+        employee.setContactDetails(ContactDetails.Builder.start().build());
+        return employee;
+    }
+
+    public static NotificationRequest getNotificationTestForEmail() {
+        return new NotificationRequest(NotificationRequest.NotificationType.EMAIL, TestEntityUtility.LOCALDATE);
+    }
+
+    public static NotificationRequest getNotificationTestForSlack() {
+        return new NotificationRequest(NotificationRequest.NotificationType.SLACK, TestEntityUtility.LOCALDATE);
+    }
+
+    public static NotificationRequest getNotificationTestForRandomDate() {
+        int hundredYears = 100 * 365;
+        LocalDate randomDate = LocalDate.ofEpochDay(ThreadLocalRandom.current().nextInt(-hundredYears, hundredYears));
+        return new NotificationRequest(NotificationRequest.NotificationType.SLACK, randomDate);
+    }
 
 }
