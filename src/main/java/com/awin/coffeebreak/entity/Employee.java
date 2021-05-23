@@ -58,38 +58,38 @@ public class Employee {
     /**
      *  Allows the construction of an Employee object. Mandatory fields are name and id.
      */
-    static class Builder {
+    public static class Builder {
 
         private Integer id;
         private String name;
         private ContactDetails contactDetails;
         private List<CoffeeBreakPreference> preferences = new ArrayList<>();
 
-        static Builder start() {
+        public static Builder start() {
             return new Builder();
         }
 
-        Builder withId(Integer id) {
+        public Builder withId(Integer id) {
             this.id = id;
             return this;
         }
 
-        Builder withName(String name) {
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        Builder withPreference(CoffeeBreakPreference preference) {
+        public Builder withPreference(CoffeeBreakPreference preference) {
             preferences.add(preference);
             return this;
         }
 
-        Builder withContactDetails(ContactDetails contactDetails) {
+        public Builder withContactDetails(ContactDetails contactDetails) {
             this.contactDetails = contactDetails;
             return this;
         }
 
-        Employee build() {
+        public Employee build() throws InvalidEmployeeException {
 
             if (id == null || name == null) {
                 throw new InvalidEmployeeException();

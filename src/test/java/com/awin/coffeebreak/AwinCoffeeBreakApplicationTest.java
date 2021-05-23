@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class AwinCoffeeBreakApplicationTest {
 
+    // This test will fail if the application is already running.
     @Test
     void contextLoads() {
     }

@@ -27,7 +27,7 @@ class CoffeeBreakPreferenceTest {
     }
 
     @Test
-    void preferenceBuilderShouldReturnPreferenceWithMandatoryFields() {
+    void preferenceBuilderShouldReturnPreferenceWithMandatoryFields() throws InvalidCoffeeBreakPreferenceException {
         CoffeeBreakPreference preference = CoffeeBreakPreference.Builder.start().withFood(FOOD).withDrink(DRINK).withDate(LOCAL_DATE).build();
 
         assert(preference.getDrink() == DRINK);

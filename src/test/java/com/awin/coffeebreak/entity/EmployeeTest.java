@@ -1,20 +1,14 @@
 package com.awin.coffeebreak.entity;
 
 import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
+import com.awin.coffeebreak.testUtils.EmployeeUtility;
+import com.awin.coffeebreak.testUtils.TestConfigurationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import static com.awin.coffeebreak.testUtils.EmployeeUtility.*;
 
 class EmployeeTest {
-
-    private final String NAME = "Test";
-    private final Integer ID = 1;
-    private final String EMAIL = "test@email.com";
-    private final String SLACK = "slackId";
-    private final CoffeeBreakPreference.Food FOOD = CoffeeBreakPreference.Food.SANDWICH;
-    private final CoffeeBreakPreference.Drink DRINK = CoffeeBreakPreference.Drink.COFFEE;
-    private final LocalDate LOCALDATE = LocalDate.now();
 
     @Test
     void ensureMissingIdThrowsException() {
@@ -28,16 +22,20 @@ class EmployeeTest {
 
     @Test
     void employeeBuilderShouldReturnEmployeeWithMandatoryFields() {
-        Employee employee = Employee.Builder.start().withId(ID).withName(NAME).build();
+        Employee employee;
+        try {
+            employee = Employee.Builder.start().withId(ID).withName(NAME).build();
+        } catch (InvalidEmployeeException e) {
+            throw new TestConfigurationException();
+        }
         assert(employee.getName()).equals(NAME);
         assert(employee.getId()).equals(ID);
     }
 
     @Test
     void employeeBuilderShouldReturnEmployeeWithInputFieldsSetCorrectly() {
-        ContactDetails contactDetails = ContactDetails.Builder.start().withEmailAddress(EMAIL).withSlackId(SLACK).build();
-        CoffeeBreakPreference preference = CoffeeBreakPreference.Builder.start().withFood(FOOD).withDrink(DRINK).withDate(LOCALDATE).build();
-        Employee employee = Employee.Builder.start().withId(ID).withName(NAME).withContactDetails(contactDetails).withPreference(preference).build();
+
+        Employee employee = EmployeeUtility.getTestEmployee();
         assert(employee.getName()).equals(NAME);
         assert(employee.getId()).equals(ID);
 

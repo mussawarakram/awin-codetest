@@ -49,32 +49,32 @@ public class CoffeeBreakPreference {
     /**
      *  Allows the construction of an CoffeeBreakPreference object. Mandatory fields are date.
      */
-    static class Builder {
+    public static class Builder {
 
         private LocalDate date;
         private Food food;
         private Drink drink;
 
-        static Builder start() {
+        public static Builder start() {
             return new Builder();
         }
 
-        Builder withDate(LocalDate date) {
+        public Builder withDate(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        Builder withFood(Food food) {
+        public Builder withFood(Food food) {
             this.food = food;
             return this;
         }
 
-        Builder withDrink(Drink drink) {
+        public Builder withDrink(Drink drink) {
             this.drink = drink;
             return this;
         }
 
-        CoffeeBreakPreference build() {
+        public CoffeeBreakPreference build() throws InvalidCoffeeBreakPreferenceException {
 
             if (date == null || (food == null && drink == null)) {
                 throw new InvalidCoffeeBreakPreferenceException();

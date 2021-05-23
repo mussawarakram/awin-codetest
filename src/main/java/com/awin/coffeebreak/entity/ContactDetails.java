@@ -29,25 +29,25 @@ public class ContactDetails {
     /**
      *  Allows the construction of an ContactDetails object. Fields are nat mandatory.
      */
-    static class Builder {
+    public static class Builder {
         String emailAddress;
         String slackId;
 
-        static Builder start() {
+        public static Builder start() {
             return new Builder();
         }
 
-        Builder withEmailAddress(String emailAddress) {
+        public Builder withEmailAddress(String emailAddress) {
             this.emailAddress = emailAddress;
             return this;
         }
 
-        Builder withSlackId(String slackId) {
+        public Builder withSlackId(String slackId) {
             this.slackId = slackId;
             return this;
         }
 
-        ContactDetails build() {
+        public ContactDetails build() {
             return new ContactDetails(emailAddress, slackId);
         }
 
