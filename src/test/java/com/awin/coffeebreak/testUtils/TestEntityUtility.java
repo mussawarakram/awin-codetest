@@ -8,9 +8,6 @@ import com.awin.coffeebreak.exceptions.InvalidCoffeeBreakPreferenceException;
 import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestEntityUtility {
@@ -27,12 +24,12 @@ public class TestEntityUtility {
         ContactDetails contactDetails = ContactDetails.Builder.start().withEmailAddress(EMAIL).withSlackId(SLACK).build();
         CoffeeBreakPreference preference;
         try {
-            preference = CoffeeBreakPreference.Builder.start().withFood(FOOD).withDrink(DRINK).withDate(LOCALDATE).build();
+            preference = CoffeeBreakPreference.Builder.start().withFood(FOOD).withDrink(DRINK).build();
         } catch (InvalidCoffeeBreakPreferenceException e) {
             throw new TestConfigurationException();
         }
         try {
-            return Employee.Builder.start().withId(ID).withName(NAME).withContactDetails(contactDetails).withPreference(preference).build();
+            return Employee.Builder.start().withId(ID).withName(NAME).withContactDetails(contactDetails).withPreference(LOCALDATE, preference).build();
         } catch (InvalidEmployeeException e) {
             throw new TestConfigurationException();
         }

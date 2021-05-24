@@ -1,9 +1,6 @@
 package com.awin.coffeebreak.entity;
 
 import com.awin.coffeebreak.exceptions.InvalidCoffeeBreakPreferenceException;
-import org.springframework.data.annotation.Id;
-
-import java.time.LocalDate;
 
 public class CoffeeBreakPreference {
 
@@ -19,15 +16,12 @@ public class CoffeeBreakPreference {
         TOAST
     }
 
-    @Id
-    private LocalDate date;
     private Food food;
     private Drink drink;
 
-    public CoffeeBreakPreference(Food food, Drink drink, LocalDate date) {
+    public CoffeeBreakPreference(Food food, Drink drink) {
         this.food = food;
         this.drink = drink;
-        this.date = date;
     }
 
     public Food getFood() {
@@ -38,18 +32,12 @@ public class CoffeeBreakPreference {
         return drink;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
+    /**
+     * @return a HTML formatted string representation of the object
+     */
     String toHtmlString() {
         StringBuilder sb = new StringBuilder();
         sb.append("<ul>");
-        sb.append("<li>").append("Date: ").append(date.toString()).append("</li>");
         sb.append("<li>").append("Food: ").append(food.toString()).append("</li>");
         sb.append("<li>").append("Drink: ").append(drink.toString()).append("</li>");
         sb.append("</ul>");
@@ -61,17 +49,11 @@ public class CoffeeBreakPreference {
      */
     public static class Builder {
 
-        private LocalDate date;
         private Food food;
         private Drink drink;
 
         public static Builder start() {
             return new Builder();
-        }
-
-        public Builder withDate(LocalDate date) {
-            this.date = date;
-            return this;
         }
 
         public Builder withFood(Food food) {
@@ -86,11 +68,11 @@ public class CoffeeBreakPreference {
 
         public CoffeeBreakPreference build() throws InvalidCoffeeBreakPreferenceException {
 
-            if (date == null || (food == null && drink == null)) {
+            if (food == null && drink == null) {
                 throw new InvalidCoffeeBreakPreferenceException();
             }
 
-            return new CoffeeBreakPreference(food, drink, date);
+            return new CoffeeBreakPreference(food, drink);
         }
 
     }

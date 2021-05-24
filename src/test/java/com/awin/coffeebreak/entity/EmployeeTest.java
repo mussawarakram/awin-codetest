@@ -42,10 +42,9 @@ class EmployeeTest {
         assert(employee.getContactDetails().getEmailAddress()).orElseThrow(TestConfigurationException::new).equals(EMAIL);
         assert(employee.getContactDetails().getSlackId()).orElseThrow(TestConfigurationException::new).equals(SLACK);
 
-        employee.getPreference().forEach(pref -> {
-            assert(pref).getDate().isEqual(LOCALDATE);
-            assert(pref).getFood().equals(FOOD);
-            assert(pref).getDrink().equals(DRINK);
+        employee.getPreference().values().forEach(val -> {
+            assert(val.getFood().equals(FOOD));
+            assert(val.getDrink().equals(DRINK));
         });
     }
 }

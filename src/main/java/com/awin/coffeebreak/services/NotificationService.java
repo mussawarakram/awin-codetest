@@ -30,7 +30,13 @@ public class NotificationService {
     public boolean sendNotification(Integer id, NotificationRequest notificationRequest) {
 
         Employee employee = employeeRepositoryService.getEmployeeById(id);
-        CoffeeBreakPreference preference = employee.getPreference().stream().filter(pref -> pref.getDate() == notificationRequest.getDate()).findFirst().orElseThrow(PreferenceNotFoundException::new);
+        CoffeeBreakPreference preference;
+
+        if (employee.getPreference().containsKey(notificationRequest.getDate())) {
+            preference = employee.getPreference().get(notificationRequest.getDate());
+        } else {
+            throw new PreferenceNotFoundException();
+        }
 
         if (notificationRequest.getNotificationType().equals(NotificationRequest.NotificationType.SLACK)) {
             String userId = employee.getContactDetails().getSlackId().orElseThrow(NotificationException::new);

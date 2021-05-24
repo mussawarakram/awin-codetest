@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Document(collection="employees")
 public class Employee {
@@ -14,11 +15,11 @@ public class Employee {
     @Id
     private Integer id;
     private String name;
-    private List<CoffeeBreakPreference> preferences;
+    private Map<LocalDate, CoffeeBreakPreference> preferences;
     @JsonIgnore
     private ContactDetails contactDetails;
 
-    private Employee(Integer id, String name, List<CoffeeBreakPreference> preferences, ContactDetails contactDetails) {
+    private Employee(Integer id, String name, Map<LocalDate, CoffeeBreakPreference> preferences, ContactDetails contactDetails) {
         this.name = name;
         this.id = id;
         this.preferences = preferences;
@@ -41,11 +42,11 @@ public class Employee {
         this.id = id;
     }
 
-    public List<CoffeeBreakPreference> getPreference() {
+    public Map<LocalDate, CoffeeBreakPreference> getPreference() {
         return preferences;
     }
 
-    public void setPreference(List<CoffeeBreakPreference> preferences) {
+    public void setPreference(Map<LocalDate, CoffeeBreakPreference> preferences) {
         this.preferences = preferences;
     }
 
@@ -57,13 +58,23 @@ public class Employee {
         this.contactDetails = contactDetails;
     }
 
+    /**
+     * @return a HTML formatted string representation of the object
+     */
     public String toHtmlString() {
         StringBuilder sb = new StringBuilder();
         sb.append("<li>").append("ID: ").append(id).append("</li>");
         sb.append("<li>").append("Name: ").append(name).append("</li>");
 
         sb.append("<li>").append("Prefences: ").append("<ul>");
-        preferences.forEach(pref -> sb.append(pref.toHtmlString()));
+
+        preferences.forEach(
+                (date, pref) -> sb.append("<ul>")
+                        .append(date.toString())
+                        .append(":")
+                        .append(pref.toHtmlString())
+                        .append("</ul>"));
+
         sb.append("</ul>").append("</li>");
 
         return sb.toString();
@@ -77,7 +88,7 @@ public class Employee {
         private Integer id;
         private String name;
         private ContactDetails contactDetails;
-        private List<CoffeeBreakPreference> preferences = new ArrayList<>();
+        private Map<LocalDate, CoffeeBreakPreference> preferences = new HashMap<>();
 
         public static Builder start() {
             return new Builder();
@@ -93,8 +104,8 @@ public class Employee {
             return this;
         }
 
-        public Builder withPreference(CoffeeBreakPreference preference) {
-            preferences.add(preference);
+        public Builder withPreference(LocalDate date, CoffeeBreakPreference preference) {
+            preferences.put(date, preference);
             return this;
         }
 

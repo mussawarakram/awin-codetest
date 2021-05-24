@@ -32,26 +32,26 @@ public class ApplicationSetup {
                     .withName("John")
                     .withId(10)
                     .withContactDetails(ContactDetails.Builder.start().withEmailAddress("john@email.com").withSlackId("John@Slack").build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.COFFEE).withDate(LocalDate.now()).build())
+                    .withPreference(LocalDate.now(), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.COFFEE).build())
                     .build();
 
             employee2 = Employee.Builder.start()
                     .withName("Emma")
                     .withId(3)
                     .withContactDetails(ContactDetails.Builder.start().withSlackId("Emma@Slack").build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.CRISPS).withDrink(CoffeeBreakPreference.Drink.TEA).withDate(LocalDate.now()).build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.TEA).withDate(LocalDate.parse("2021-05-24")).build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.COFFEE).withDate(LocalDate.parse("2021-05-25")).build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.CRISPS).withDrink(CoffeeBreakPreference.Drink.COFFEE).withDate(LocalDate.parse("2021-05-26")).build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.COFFEE).withDate(LocalDate.parse("2021-05-27")).build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.TEA).withDate(LocalDate.parse("2021-05-28")).build())
+                    .withPreference(LocalDate.now(), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.CRISPS).withDrink(CoffeeBreakPreference.Drink.TEA).build())
+                    .withPreference(LocalDate.parse("2021-05-24"), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.TEA).build())
+                    .withPreference(LocalDate.parse("2021-05-25"), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.COFFEE).build())
+                    .withPreference(LocalDate.parse("2021-05-26"), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.CRISPS).withDrink(CoffeeBreakPreference.Drink.COFFEE).build())
+                    .withPreference(LocalDate.parse("2021-05-27"), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.SANDWICH).withDrink(CoffeeBreakPreference.Drink.COFFEE).build())
+                    .withPreference(LocalDate.parse("2021-05-28"), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.TEA).build())
                     .build();
 
             employee3 = Employee.Builder.start()
                     .withName("Jack")
                     .withId(224)
                     .withContactDetails(ContactDetails.Builder.start().withEmailAddress("Jack@email.com").build())
-                    .withPreference(CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.TEA).withDate(LocalDate.now()).build())
+                    .withPreference(LocalDate.now(), CoffeeBreakPreference.Builder.start().withFood(CoffeeBreakPreference.Food.TOAST).withDrink(CoffeeBreakPreference.Drink.TEA).build())
                     .build();
         } catch (InvalidCoffeeBreakPreferenceException | InvalidEmployeeException e) {
             throw new RuntimeException();
