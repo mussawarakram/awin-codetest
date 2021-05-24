@@ -1,5 +1,6 @@
 package com.awin.coffeebreak.controller;
 
+import com.awin.coffeebreak.config.ApplicationSetup;
 import com.awin.coffeebreak.entity.Employee;
 import com.awin.coffeebreak.entity.NotificationRequest;
 import com.awin.coffeebreak.services.EmployeeRepositoryService;
@@ -52,5 +53,14 @@ public class CoffeeBreakPreferenceController {
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * This method was created purely to put some mock data in to play around with the actual implementations above!
+     */
+    @PostMapping(path = "/init")
+    public ResponseEntity<HttpStatus> initData() {
+        ApplicationSetup.initData();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
