@@ -36,9 +36,24 @@ class CoffeeBreakPreferenceControllerTest {
     private NotificationService notificationService;
 
     @Test
-    void whenValidInputForEmployee_thenReturns200() throws Exception {
+    void whenValidInputForEmployee_thenReturns200Json() throws Exception {
         mockMvc.perform(get("/employees/42")
                 .accept("application/json"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenValidInputForEmployee_thenReturns200Html() throws Exception {
+        Mockito.when(employeeRepositoryService.getEmployeeById(any())).thenReturn(TestEntityUtility.getTestEmployee());
+        mockMvc.perform(get("/employees/42")
+                .accept("text/html"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenValidInputForEmployee_thenReturns200Xml() throws Exception {
+        mockMvc.perform(get("/employees/42")
+                .accept("text/xml"))
                 .andExpect(status().isOk());
     }
 

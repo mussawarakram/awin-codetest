@@ -20,16 +20,30 @@ public class CoffeeBreakPreferenceController {
         this.notificationService = notificationService;
     }
 
-    //TODO: implement text/html, application/json and text/xml response formats
     /**
-     * Retrieves the current preferences for an employee
+     * This method fetches the ID'd employee object if it exists, or throws an exception if it doesn't.
+     *
+     * @param accept The response formats accepted by the consumer
+     * @param id The Employee ID to attempt to retrieve
+     * @return a response entity with the requested object, or an exception defined in the global handler
      */
     @GetMapping(path = "/employees/{id}", produces = {MediaType.TEXT_XML_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_HTML_VALUE})
     public ResponseEntity<?> getEmployee(@RequestHeader String accept, @PathVariable Integer id) {
         Employee employee = employeeRepositoryService.getEmployeeById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        if (accept.equals(MediaType.TEXT_HTML_VALUE)) {
+            return new ResponseEntity<>(employee.toHtmlString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
     }
 
+    /**
+     * This method will send a notification to the employee ID in question.
+     *
+     * @param id The employee ID to attempt to notify
+     * @param notificationRequest a request body consisting of contact mechanism and date
+     * @return A status code representing whether the request was valid or not
+     */
     @PostMapping(path = "/employees/{id}/sendNotification")
     public ResponseEntity<?> sendNotification(@PathVariable Integer id, @RequestBody NotificationRequest notificationRequest) {
         boolean success = notificationService.sendNotification(id, notificationRequest);

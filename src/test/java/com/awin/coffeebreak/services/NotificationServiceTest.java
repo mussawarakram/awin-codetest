@@ -1,6 +1,5 @@
 package com.awin.coffeebreak.services;
 
-import com.awin.coffeebreak.entity.NotificationRequest;
 import com.awin.coffeebreak.exceptions.NotificationException;
 import com.awin.coffeebreak.exceptions.PreferenceNotFoundException;
 import com.awin.coffeebreak.testUtils.TestEntityUtility;
@@ -21,17 +20,17 @@ class NotificationServiceTest {
     private EmployeeRepositoryService employeeRepositoryService;
 
     @MockBean
-    private EmailNotifier emailNotifier;
+    private NotifierEmail notifierEmail;
 
     @MockBean
-    private SlackNotifier slackNotifier;
+    private NotifierSlack notifierSlack;
 
 
     private NotificationService notificationService;
 
     @BeforeAll
     void setup() {
-        notificationService = new NotificationService(employeeRepositoryService, emailNotifier, slackNotifier);
+        notificationService = new NotificationService(employeeRepositoryService, notifierEmail, notifierSlack);
     }
 
     @Test

@@ -12,7 +12,7 @@ public class ContactDetails {
         this.slackId = slackId;
     }
 
-    Optional<String> getEmailAddress() {
+    public Optional<String> getEmailAddress() {
         return Optional.ofNullable(emailAddress);
     }
 

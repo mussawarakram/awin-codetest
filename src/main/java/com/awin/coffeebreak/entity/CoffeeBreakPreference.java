@@ -30,11 +30,11 @@ public class CoffeeBreakPreference {
         this.date = date;
     }
 
-    Food getFood() {
+    public Food getFood() {
         return food;
     }
 
-    Drink getDrink() {
+    public Drink getDrink() {
         return drink;
     }
 
@@ -44,6 +44,16 @@ public class CoffeeBreakPreference {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    String toHtmlString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<ul>");
+        sb.append("<li>").append("Date: ").append(date.toString()).append("</li>");
+        sb.append("<li>").append("Food: ").append(food.toString()).append("</li>");
+        sb.append("<li>").append("Drink: ").append(drink.toString()).append("</li>");
+        sb.append("</ul>");
+        return sb.toString();
     }
 
     /**

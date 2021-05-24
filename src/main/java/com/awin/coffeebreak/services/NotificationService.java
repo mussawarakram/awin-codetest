@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
 
     private EmployeeRepositoryService employeeRepositoryService;
-    private EmailNotifier emailNotifier;
-    private SlackNotifier slackNotifier;
+    private NotifierEmail notifierEmail;
+    private NotifierSlack notifierSlack;
 
-    NotificationService(EmployeeRepositoryService employeeRepositoryService, EmailNotifier emailNotifier, SlackNotifier slackNotifier) {
+    NotificationService(EmployeeRepositoryService employeeRepositoryService, NotifierEmail notifierEmail, NotifierSlack notifierSlack) {
         this.employeeRepositoryService = employeeRepositoryService;
-        this.emailNotifier = emailNotifier;
-        this.slackNotifier = slackNotifier;
+        this.notifierEmail = notifierEmail;
+        this.notifierSlack = notifierSlack;
     }
 
     /**
@@ -34,11 +34,11 @@ public class NotificationService {
 
         if (notificationRequest.getNotificationType().equals(NotificationRequest.NotificationType.SLACK)) {
             String userId = employee.getContactDetails().getSlackId().orElseThrow(NotificationException::new);
-            slackNotifier.sendNotification(userId, preference);
+            notifierSlack.sendNotification(userId, preference);
             return true;
         } else if (notificationRequest.getNotificationType().equals(NotificationRequest.NotificationType.EMAIL)) {
             String userId = employee.getContactDetails().getSlackId().orElseThrow(NotificationException::new);
-            emailNotifier.sendNotification(userId, preference);
+            notifierEmail.sendNotification(userId, preference);
             return true;
         }
 

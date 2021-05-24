@@ -1,10 +1,10 @@
 package com.awin.coffeebreak.entity;
 
 import com.awin.coffeebreak.exceptions.InvalidEmployeeException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +15,7 @@ public class Employee {
     private Integer id;
     private String name;
     private List<CoffeeBreakPreference> preferences;
+    @JsonIgnore
     private ContactDetails contactDetails;
 
     private Employee(Integer id, String name, List<CoffeeBreakPreference> preferences, ContactDetails contactDetails) {
@@ -24,7 +25,7 @@ public class Employee {
         this.contactDetails = contactDetails;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
@@ -32,7 +33,7 @@ public class Employee {
         this.name = name;
     }
 
-    Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -54,6 +55,18 @@ public class Employee {
 
     public void setContactDetails(ContactDetails contactDetails) {
         this.contactDetails = contactDetails;
+    }
+
+    public String toHtmlString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<li>").append("ID: ").append(id).append("</li>");
+        sb.append("<li>").append("Name: ").append(name).append("</li>");
+
+        sb.append("<li>").append("Prefences: ").append("<ul>");
+        preferences.forEach(pref -> sb.append(pref.toHtmlString()));
+        sb.append("</ul>").append("</li>");
+
+        return sb.toString();
     }
 
     /**
